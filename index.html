@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Collision-Aware Humanoid Whole-Body Control under Imperfect Tracking Targets</title>
+  <meta name="description" content="RECAL wraps a blind humanoid whole-body controller with robot–environment cross-attention over point clouds, avoiding collisions for the body and held objects while preserving target tracking. Demonstrated on a Digit V3 humanoid.">
+  <meta name="keywords" content="humanoid robots, whole-body control, collision avoidance, reinforcement learning, cross-attention, point clouds, loco-manipulation, Digit">
+  <meta name="author" content="Mohitvishnu S. Gadde, Ashish Malik, Pranay Dugar, Aayam Kumar Shrestha, Fuxin Li, Alan Fern">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://mohitgadde.com/recal/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Oregon State University">
+  <meta property="og:title" content="Collision-Aware Humanoid Whole-Body Control under Imperfect Tracking Targets">
+  <meta property="og:description" content="A learned cross-attention layer that makes a blind humanoid whole-body controller collision-aware, for the robot body and held objects.">
+  <meta property="og:url" content="https://mohitgadde.com/recal/">
+  <meta property="og:image" content="https://mohitgadde.com/recal/static/images/social_preview.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="RECAL system overview">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Collision-Aware Humanoid Whole-Body Control under Imperfect Tracking Targets">
+  <meta name="twitter:description" content="A learned cross-attention layer that makes a blind humanoid whole-body controller collision-aware, for the robot body and held objects.">
+  <meta name="twitter:image" content="https://mohitgadde.com/recal/static/images/social_preview.jpg">
+
+  <!-- Google Scholar -->
+  <meta name="citation_title" content="Collision-Aware Humanoid Whole-Body Control under Imperfect Tracking Targets">
+  <meta name="citation_author" content="Gadde, Mohitvishnu S.">
+  <meta name="citation_author" content="Malik, Ashish">
+  <meta name="citation_author" content="Dugar, Pranay">
+  <meta name="citation_author" content="Shrestha, Aayam Kumar">
+  <meta name="citation_author" content="Li, Fuxin">
+  <meta name="citation_author" content="Fern, Alan">
+  <meta name="citation_publication_date" content="2026/09/14">
+  <meta name="citation_conference_title" content="2026 IEEE-RAS International Conference on Humanoid Robots (Humanoids)">
+  <meta name="citation_arxiv_id" content="2609.16405">
+  <meta name="citation_pdf_url" content="https://arxiv.org/pdf/2609.16405">
+
+  <meta name="theme-color" content="#2563eb">
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script defer src="static/js/index.js"></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "Collision-Aware Humanoid Whole-Body Control under Imperfect Tracking Targets",
+    "author": [
+      {"@type": "Person", "name": "Mohitvishnu S. Gadde", "url": "https://mohitgadde.com"},
+      {"@type": "Person", "name": "Ashish Malik"},
+      {"@type": "Person", "name": "Pranay Dugar"},
+      {"@type": "Person", "name": "Aayam Kumar Shrestha"},
+      {"@type": "Person", "name": "Fuxin Li"},
+      {"@type": "Person", "name": "Alan Fern"}
+    ],
+    "datePublished": "2026-09-14",
+    "publisher": {"@type": "Organization", "name": "IEEE-RAS International Conference on Humanoid Robots (Humanoids) 2026"},
+    "url": "https://mohitgadde.com/recal/",
+    "image": "https://mohitgadde.com/recal/static/images/social_preview.jpg",
+    "sameAs": "https://arxiv.org/abs/2609.16405",
+    "isAccessibleForFree": true
+  }
+  </script>
+</head>
+<body>
+
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <!-- More Works dropdown -->
+  <div class="more-works-container">
+    <button class="more-works-btn" onclick="toggleMoreWorks()" title="More works from our lab">
+      <i class="fas fa-flask"></i>
+      More Works
+      <i class="fas fa-chevron-down dropdown-arrow"></i>
+    </button>
+    <div class="more-works-dropdown" id="moreWorksDropdown">
+      <div class="dropdown-header">
+        <h4>More Works from Our Lab</h4>
+        <button class="close-btn" onclick="toggleMoreWorks()" aria-label="Close">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="works-list">
+        <a href="https://decmht.github.io/" class="work-item" target="_blank">
+          <div class="work-info">
+            <h5>Learning Multi-Humanoid Pickup and Transport via Decentralized Object-Centric Control</h5>
+            <p>A single decentralized controller lets teams of up to ten humanoids pick up and carry shared payloads.</p>
+            <span class="work-venue">arXiv 2026</span>
+          </div>
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+        <a href="https://arxiv.org/abs/2508.11929" class="work-item" target="_blank">
+          <div class="work-info">
+            <h5>No More Blind Spots: Learning Vision-Based Omnidirectional Bipedal Locomotion for Challenging Terrain</h5>
+            <p>Omnidirectional depth perception for bipedal locomotion over challenging terrain, trained without rendering in RL.</p>
+            <span class="work-venue">Humanoids 2025</span>
+          </div>
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+        <a href="https://decmbc.github.io/" class="work-item" target="_blank">
+          <div class="work-info">
+            <h5>Learning Decentralized Multi-Biped Control for Payload Transport</h5>
+            <p>Decentralized collaborative payload transport with multiple bipedal robots, transferred sim-to-real.</p>
+            <span class="work-venue">CoRL 2024</span>
+          </div>
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <main id="main-content">
+
+  <!-- Title, authors, links -->
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">
+              Collision-Aware Humanoid Whole-Body Control under Imperfect Tracking Targets
+              <span class="publication-subtitle"><strong>RECAL</strong>: Robot&ndash;Environment Cross-Attention Layer</span>
+            </h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><a href="https://mohitgadde.com" target="_blank">Mohitvishnu S. Gadde</a>,</span>
+              <span class="author-block">Ashish Malik,</span>
+              <span class="author-block">Pranay Dugar,</span>
+              <span class="author-block">Aayam Kumar Shrestha,</span>
+              <span class="author-block">Fuxin Li,</span>
+              <span class="author-block">Alan Fern</span>
+            </div>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">Collaborative Robotics and Intelligent Systems Institute (CoRIS), Oregon State University</span>
+            </div>
+            <div class="is-size-5 publication-venue">
+              IEEE-RAS International Conference on Humanoid Robots (Humanoids) 2026
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="https://arxiv.org/pdf/2609.16405" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2609.16405" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="ai ai-arxiv"></i></span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://youtu.be/3OJz_L0tzPg" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fab fa-youtube"></i></span>
+                    <span>Video</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Teaser video -->
+  <section class="hero teaser" id="video">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/3OJz_L0tzPg?rel=0" title="RECAL video" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <h2 class="subtitle has-text-centered" style="margin-top: 1rem;">
+          RECAL lets a humanoid follow imperfect commands through cluttered spaces, deviating only as much as needed to keep its body and held objects clear of obstacles.
+        </h2>
+      </div>
+    </div>
+  </section>
+
+  <!-- Abstract -->
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Humanoid robots often execute motion commands through whole-body controllers (WBCs) that track targets while maintaining balance and stability. However, most WBCs are blind to scene geometry, which can lead to collisions from imperfect target motions that are geometrically unsafe due to perception, planning, or teleoperation errors. We propose RECAL, a Robot&ndash;Environment Cross-Attention Layer that wraps a blind WBC to trade off target tracking against collision avoidance using external scene geometry. RECAL supports collision-aware tracking of floating-base and end-effector commands, including collision avoidance for held objects. It represents the robot, held objects, and environment as point clouds, using cross-attention between robot/object points and the environment to produce geometry-aware control features. In simulation, RECAL improves collision avoidance while preserving target-tracking performance across frozen-arm and adaptive-arm locomotion, object-carrying, and standing-manipulation scenarios relative to alternative geometry-aware WBC architectures. We further demonstrate the controller on a real Digit V3 humanoid robot.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hardware demonstrations -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Real-World Demonstrations on Digit V3</h2>
+      <div class="content has-text-justified">
+        <p>
+          Commands come from a teleoperator or an end-effector target generator and are not guaranteed to be collision-free.
+          RECAL adapts them before they reach the blind WBC, steering the body, arms, and held object around obstacles, then returns to the intended motion once it becomes feasible.
+          Perception comes from two chest- and pelvis-mounted RealSense D455 depth cameras.
+        </p>
+      </div>
+      <div class="demo-grid">
+        <figure>
+          <video src="static/videos/adaptive_arm.mp4" poster="static/videos/adaptive_arm.jpg" muted loop playsinline controls preload="none" data-autoplay></video>
+          <figcaption>Adaptive-arm locomotion</figcaption>
+        </figure>
+        <figure>
+          <video src="static/videos/frozen_arm.mp4" poster="static/videos/frozen_arm.jpg" muted loop playsinline controls preload="none" data-autoplay></video>
+          <figcaption>Frozen-arm locomotion</figcaption>
+        </figure>
+        <figure>
+          <video src="static/videos/object_carrying.mp4" poster="static/videos/object_carrying.jpg" muted loop playsinline controls preload="none" data-autoplay></video>
+          <figcaption>Object carrying</figcaption>
+        </figure>
+        <figure>
+          <video src="static/videos/stationary_reach.mp4" poster="static/videos/stationary_reach.jpg" muted loop playsinline controls preload="none" data-autoplay></video>
+          <figcaption>Stationary reaching</figcaption>
+        </figure>
+        <figure>
+          <video src="static/videos/reach_held_object.mp4" poster="static/videos/reach_held_object.jpg" muted loop playsinline controls preload="none" data-autoplay></video>
+          <figcaption>Reaching with a held object</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Approach -->
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Approach</h2>
+      <div class="content has-text-justified">
+        <p>
+          Rather than requiring upstream systems to provide complete, collision-free whole-body references, RECAL treats incoming targets as guidance and resolves local geometric conflicts at the control level.
+          Privileged teachers for locomotion and reaching generate safe commands, and both are distilled into a single observation-only student.
+          At deployment, RECAL uses only proprioception, an egocentric point cloud, and robot/object query points to modify the target commands sent to an existing, frozen WBC.
+        </p>
+      </div>
+      <img src="static/images/overview.jpg" class="paper-figure" alt="RECAL system overview: privileged teacher training, student distillation, and deployment on a real robot" loading="lazy">
+      <p class="figure-caption">
+        System overview. Privileged locomotion and reach teachers are distilled into one RECAL student, which adapts commands for a blind WBC on the real robot.
+      </p>
+
+      <div class="content has-text-justified" style="margin-top: 2.5rem;">
+        <p>
+          Points sampled on the robot body and held object act as queries into the environment point cloud.
+          Cross-attention produces a geometry-aware feature for each query point. These features are compressed, concatenated with proprioception and the input command, and passed through a recurrent command adapter that outputs the modified WBC command.
+        </p>
+      </div>
+      <img src="static/images/architecture.jpg" class="paper-figure" alt="RECAL student architecture with point cloud encoder, query projection, cross-attention, and LSTM command adapter" loading="lazy">
+      <p class="figure-caption">RECAL architecture: robot and object query points cross-attend to the egocentric environment point cloud.</p>
+    </div>
+  </section>
+
+  <!-- Results -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Results</h2>
+      <div class="content has-text-justified">
+        <p>
+          In simulation, the blind WBC (orange) follows the reference straight into obstacles, while RECAL (teal) deviates just enough to stay collision-free and then rejoins the commanded path.
+        </p>
+      </div>
+      <video class="paper-figure" src="static/videos/sim_comparison.mp4" poster="static/videos/sim_comparison.jpg" muted loop playsinline controls preload="none" data-autoplay></video>
+      <p class="figure-caption">Blind WBC vs. RECAL on locomotion and shelf-reaching tasks in simulation.</p>
+      <div class="content has-text-justified" style="margin-top: 2.5rem;">
+        <p>
+          Collision-free success rate on the <strong>Hard</strong> variant of each task, averaged over 5 seeds.
+          RECAL is the best deployable student on every task, outperforming PointNet and voxel scene encoders and approaching the privileged teacher.
+        </p>
+      </div>
+      <div class="results-table-wrap">
+        <table class="results-table">
+          <thead>
+            <tr>
+              <th>Method</th>
+              <th>Adaptive-arm<br>locomotion</th>
+              <th>Frozen-arm<br>locomotion</th>
+              <th>Object<br>carrying</th>
+              <th>Stationary<br>reach</th>
+              <th>Reach w/<br>held object</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Blind WBC</td><td>0.32</td><td>0.33</td><td>0.51</td><td>0.45</td><td>0.39</td></tr>
+            <tr><td>Student (Voxel)</td><td>0.21</td><td>0.31</td><td>0.52</td><td>0.37</td><td>0.29</td></tr>
+            <tr><td>Student (PointNet)</td><td>0.65</td><td>0.56</td><td>0.63</td><td>0.47</td><td>0.43</td></tr>
+            <tr class="is-ours"><td>Student (RECAL)</td><td>0.91</td><td>0.86</td><td>0.92</td><td>0.81</td><td>0.72</td></tr>
+            <tr class="is-reference"><td>Privileged teacher</td><td>0.96</td><td>0.89</td><td>1.00</td><td>0.87</td><td>0.81</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="columns" style="margin-top: 2.5rem;">
+        <div class="column">
+          <img src="static/images/attention.jpg" class="paper-figure" alt="Hand query attention scores over the environment point cloud during locomotion" loading="lazy">
+          <p class="figure-caption">As the hands approach an obstacle, their query points attend more strongly to nearby geometry.</p>
+        </div>
+        <div class="column">
+          <img src="static/images/force.jpg" class="paper-figure" alt="Average contact force on the robot body for each method" loading="lazy">
+          <p class="figure-caption">RECAL sharply reduces collision frequency and impact forces on the robot body.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contributions -->
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Key Contributions</h2>
+      <div class="content">
+        <ul class="contrib-list">
+          <li>A collision-aware humanoid WBC framework that tracks floating-base and end-effector targets while avoiding collisions with the environment.</li>
+          <li>The Robot&ndash;Environment Cross-Attention Layer, which uses robot and held-object points as queries into the environment point cloud to produce collision-aware commands for an underlying blind WBC.</li>
+          <li>Simulation and real-robot validation showing that RECAL deviates from unsafe commands, avoids collisions, and recovers target tracking across loco-manipulation scenarios.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- BibTeX -->
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <div class="bibtex-header">
+        <h2 class="title">BibTeX</h2>
+        <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX to clipboard">
+          <i class="fas fa-copy"></i>
+          <span class="copy-text">Copy</span>
+        </button>
+      </div>
+      <pre id="bibtex-code"><code>@inproceedings{gadde2026recal,
+  title={Collision-Aware Humanoid Whole-Body Control under Imperfect Tracking Targets},
+  author={Gadde, Mohitvishnu S. and Malik, Ashish and Dugar, Pranay and
+          Shrestha, Aayam Kumar and Li, Fuxin and Fern, Alan},
+  booktitle={2026 IEEE-RAS International Conference on Humanoid Robots (Humanoids)},
+  year={2026}
+}</code></pre>
+    </div>
+  </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This work is supported by NSF Award 2321851, DARPA contract HR0011-24-9-0423, and the NVIDIA Academic Grant Program.
+            </p>
+            <p>
+              This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a>, adapted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+              It is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
