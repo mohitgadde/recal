@@ -1,23 +1,3 @@
-// More Works dropdown
-function toggleMoreWorks() {
-  document.getElementById('moreWorksDropdown').classList.toggle('show');
-  document.querySelector('.more-works-btn').classList.toggle('active');
-}
-
-function closeMoreWorks() {
-  document.getElementById('moreWorksDropdown').classList.remove('show');
-  document.querySelector('.more-works-btn').classList.remove('active');
-}
-
-document.addEventListener('click', function (event) {
-  const container = document.querySelector('.more-works-container');
-  if (container && !container.contains(event.target)) closeMoreWorks();
-});
-
-document.addEventListener('keydown', function (event) {
-  if (event.key === 'Escape') closeMoreWorks();
-});
-
 // Copy BibTeX to clipboard
 function copyBibTeX() {
   const text = document.getElementById('bibtex-code').textContent;

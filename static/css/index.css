@@ -782,8 +782,25 @@ a:focus {
 
 .demo-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.25rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+/* Center a lone last clip at the same size as the others */
+.demo-grid figure:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: calc(50% - 0.75rem);
+}
+
+@media screen and (max-width: 768px) {
+  .demo-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .demo-grid figure:last-child:nth-child(odd) {
+    width: 100%;
+  }
 }
 
 .demo-grid figure {
